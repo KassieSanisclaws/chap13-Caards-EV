@@ -8,11 +8,51 @@
 import SwiftUI
 
 struct CardElementView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+ 
+    let element: any CardElement
+    
+    @ViewBuilder
+    func clippedImage(
+        _ image: ImageElement
+    ) -> some View {
+     
+        if let frame =
+            image.frameIndex {
+     
+            image.image
+                .resizable()
+                .aspectRatio(
+                    contentMode: .fit
+                )
+                .clipShape(
+                    Shapes.shapes[frame]
+                )
+                .contentShape(
+                    Ellipse()
+                )
+     
+        } else {
+     
+            image.image
+                .resizable()
+                .aspectRatio(
+                    contentMode: .fit
+                )
+        }
     }
-}
-
-#Preview {
-    CardElementView()
+ 
+    var body: some View {
+ 
+        if let image =
+            element as? ImageElement {
+ 
+            clippedImage(image)
+        }
+ 
+        if let text =
+            element as? TextElement {
+ 
+            Text(text.text)
+        }
+    }
 }

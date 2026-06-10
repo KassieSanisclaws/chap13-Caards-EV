@@ -7,12 +7,39 @@
 
 import SwiftUI
 
-struct CardStore: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+@Observable
+class CardStore {
+    var selectedElement: (any CardElement)?
+    var cards: [Card]
+ 
+    init(defaultData: Bool = false) {
+        cards = defaultData ? Self.initialCards : Self.load()
     }
-}
-
-#Preview {
-    CardStore()
+    
+    // Default data (Ony on first launch)
+    static var initialCards: [Card] {
+         [ Card(), Card(), Card() ]
+    }
+    
+    static func load() -> [Card] {
+        let url = Card.documentsURL
+        guard let files = try? FileManager.default.contentsOfDirectory(
+            at: url, includingPropertiesForKeys: nil
+         )
+          else {
+             return []
+        }
+        return files.compactMap { file in
+            guard file.pathExtension == "json" else { return nil }
+            guard let data = try? Data(contentsOf: file) else { return nil }
+            return try? JSONDecoder().decode(Card.self, from: data)
+        }
+    }
+    
+    func addCard() -> Card {
+        let card = Card()
+        cards.append(card)
+        card.save()
+        return card
+    }
 }

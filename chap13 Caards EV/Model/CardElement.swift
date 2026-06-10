@@ -7,4 +7,8 @@
 
 import SwiftUI
 
-
+protocol CardElement: Identifiable {
+    
+    var id: UUID { get }
+    var transform: Transform { get set } 
+}

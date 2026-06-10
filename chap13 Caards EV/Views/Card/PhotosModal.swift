@@ -6,13 +6,78 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct PhotosModal: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+     
+        @Binding var card: Card
+     
+        @State private var selectedItems: [PhotosPickerItem] = []
+     
+        var body: some View {
+     
+            PhotosPicker(
 
-#Preview {
-    PhotosModal()
-}
+                selection: $selectedItems,
+                matching: .images
+
+            ) {
+                Label("Photos", systemImage: "photo")
+            }
+
+            .onChange(of: selectedItems) {
+     
+                _, items in
+     
+                for item in items {
+     
+                    item.loadTransferable(
+
+                        type: Data.self
+
+                    ) { result in
+     
+                        Task {
+     
+                            switch result {
+     
+                            case .success(let data):
+     
+                                if let data,
+
+                                   let image =
+
+                                    UIImage(data: data) {
+     
+                                    await MainActor.run {
+     
+                                        card.addElement(
+
+                                            uiImage: image
+
+                                        )
+
+                                    }
+
+                                }
+     
+                            case .failure(let error):
+     
+                                print(error)
+
+                            }
+
+                        }
+
+                    }
+
+                }
+     
+                selectedItems = []
+
+            }
+
+        }
+
+    }
+     

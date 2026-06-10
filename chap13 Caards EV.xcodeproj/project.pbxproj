@@ -6,13 +6,31 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		226F752D2FD0E9CF00F4B2C7 /* Stickers in Resources */ = {isa = PBXBuildFile; fileRef = 226F752C2FD0E9CF00F4B2C7 /* Stickers */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		22451C862FCE40E6008BADE9 /* chap13 Caards EV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chap13 Caards EV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		226F752C2FD0E9CF00F4B2C7 /* Stickers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Stickers; path = "chap13 Caards EV/Assets.xcassets/Stickers"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		226F752B2FD0E52D00F4B2C7 /* Exceptions for "chap13 Caards EV" folder in "chap13 Caards EV" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"chap13-Caards-EV-Info.plist",
+			);
+			target = 22451C852FCE40E6008BADE9 /* chap13 Caards EV */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		22451C882FCE40E6008BADE9 /* chap13 Caards EV */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				226F752B2FD0E52D00F4B2C7 /* Exceptions for "chap13 Caards EV" folder in "chap13 Caards EV" target */,
+			);
 			path = "chap13 Caards EV";
 			sourceTree = "<group>";
 		};
@@ -32,6 +50,7 @@
 		22451C7D2FCE40E6008BADE9 = {
 			isa = PBXGroup;
 			children = (
+				226F752C2FD0E9CF00F4B2C7 /* Stickers */,
 				22451C882FCE40E6008BADE9 /* chap13 Caards EV */,
 				22451C872FCE40E6008BADE9 /* Products */,
 			);
@@ -109,6 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				226F752D2FD0E9CF00F4B2C7 /* Stickers in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +273,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "chap13-Caards-EV-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +305,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "chap13-Caards-EV-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
