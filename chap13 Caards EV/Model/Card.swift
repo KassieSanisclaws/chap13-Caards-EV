@@ -11,6 +11,7 @@ struct Card: Identifiable {
     
     var id = UUID()
     var elements: [any CardElement] = []
+    var backgroundColor: Color = .white 
     static var documentsURL: URL {
         UIImage.documentsDirectory
     }

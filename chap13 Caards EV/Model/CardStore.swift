@@ -18,7 +18,11 @@ class CardStore {
     
     // Default data (Ony on first launch)
     static var initialCards: [Card] {
-         [ Card(), Card(), Card() ]
+        [
+          Card(backgroundColor: .red),
+          Card(backgroundColor: .green),
+          Card(backgroundColor: .indigo)
+        ]
     }
     
     static func load() -> [Card] {
@@ -37,7 +41,7 @@ class CardStore {
     }
     
     func addCard() -> Card {
-        let card = Card()
+        let card = Card(backgroundColor: Color.random())
         cards.append(card)
         card.save()
         return card
