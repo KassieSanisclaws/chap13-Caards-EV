@@ -1,0 +1,17 @@
+{
+  "images" : [
+    {
+      "filename" : "bg sage green light 2.jpg",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "bg light sage green@2x.jpg",
+      "height-class" : "compact",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
