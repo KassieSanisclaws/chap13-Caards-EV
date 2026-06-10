@@ -8,16 +8,24 @@
 import SwiftUI
 
 struct CardThumbnail: View {
+    let card: Card
     var body: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .foregroundStyle(Color.random())
-            .frame(
-                width: Settings.thumbnailSize.width,
-                height: Settings.thumbnailSize.height
-            )
-    }
+        card.backgroundColor
+              .cornerRadius(15)
+              .shadow( color: .shadow,
+                       radius: 3,
+                       x: 0,
+                       y: 0
+                     )
+        }
 }
 
 #Preview {
-    CardThumbnail()
+    CardThumbnail(
+        card: Card()
+    )
+    .frame(
+        width: Settings.thumbnailSize.width,
+        height: Settings.thumbnailSize.height
+    )
 }

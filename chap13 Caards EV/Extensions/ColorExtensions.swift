@@ -24,4 +24,8 @@ extension Color {
     static func random() -> Color {
         colors.randomElement() ?? .black
     }
+    
+    static let background = Color(.systemGray)
+    static let bar = Color(.systemRed)
+    static let shadow = Color.black.opacity(0.15)
 }

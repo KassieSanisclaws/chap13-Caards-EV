@@ -14,7 +14,7 @@ struct Card: Identifiable {
     static var documentsURL: URL {
         UIImage.documentsDirectory
     }
-    var ffilname: String {
+    var filename: String {
         "\(id.uuidString).json"
     }
 }
@@ -22,7 +22,7 @@ struct Card: Identifiable {
 extension Card: Codable {
     
     enum CodingKeys: CodingKey {
-        case id, backgrounndColor, imageElements, textElements
+        case id, backgroundColor, imageElements, textElements
     }
     
     init(from decoder: Decoder) throws {
@@ -36,7 +36,7 @@ func save() {
     do {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
-        let url = Self.documentsURL.appendingPathComponent(ffilname)
+        let url = Self.documentsURL.appendingPathComponent(filename)
         try data.write(to: url)
     } catch {
         print(error)
