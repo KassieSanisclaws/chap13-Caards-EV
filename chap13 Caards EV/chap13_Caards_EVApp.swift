@@ -9,12 +9,10 @@ import SwiftUI
 
 @main
 struct chap13_Caards_EVApp: App {
-    
     @State private var store = CardStore()
-    
     var body: some Scene {
         WindowGroup {
-            CardsListView()
+            AppLoadingView()
                 .environment(store)
         }
     }

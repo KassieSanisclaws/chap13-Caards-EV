@@ -13,6 +13,7 @@ struct CardsListView: View {
     @State private var selectedCard: Card?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Namespace private var nameSpace
     
     var columns: [GridItem] {
         [
@@ -49,41 +50,17 @@ struct CardsListView: View {
     }
     
     var initialView: some View {
-        
         VStack {
-            
-            let card = Card(
-                backgroundColor:
-                    Color(
-                        uiColor:
-                                .systemBackground
-                    )
-            )
-            
-            ZStack {
-                
-                CardThumbnail(
-                    card: card
-                )
-                
-                Image(
-                    systemName:
-                        "plus.circle.fill"
-                )
+            let card = Card(backgroundColor: Color(uiColor: .systemBackground))
+        ZStack {
+                CardThumbnail(card: card)
+                .matchedTransitionSource(id: card.id, in: nameSpace)
+                Image(systemName: "plus.circle.fill")
                 .font(.largeTitle)
-            }
-            .onTapGesture {
-                
-                selectedCard =
-                store.addCard()
-            }
+             }
+            .onTapGesture { selectedCard = store.addCard() }
         }
-        .frame(
-            width:
-                thumbnailSize.width * 1.2,
-            height:
-                thumbnailSize.height * 1.2
-        )
+        .frame(width: thumbnailSize.width * 1.2, height: thumbnailSize.height * 1.2)
         .padding(.bottom, 20)
     }
     
@@ -126,6 +103,8 @@ struct CardsListView: View {
         }
         .fullScreenCover(item: $selectedCard) { card in
             SingleCardView()
+                .navigationTransition(.zoom(sourceID: card.id, in: nameSpace))
+                .interactiveDismissDisabled(true)
         }
     }
 }

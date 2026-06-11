@@ -17,105 +17,79 @@ struct SingleCardView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     func isSelected(
-       _ element: any CardElement
+        _ element: any CardElement
     ) -> Bool {
         store.selectedElement?.id == element.id
     }
     
-    var content: some View {
-        ZStack {
-                ForEach(
-                    Array(card.elements.enumerated()),
-                    id: \.offset
-                ) { _, element in
-                    CardElementView(
-                        element: element
-                            
-                    )
-                    .border(
-                        Settings.borderColor,
-                        width: isSelected(element)
-                        ? Settings.borderWidth : 0 
-                    )
-                    .resizableView()
-                    .onTapGesture {
-                        store.selectedElement  = element
-                    }
-                }
-            }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            store.selectedElement = nil
-         }
-        .onDisappear {
-            store.selectedElement = nil
-        }
-     }
-    
     var body: some View {
         NavigationStack {
-            content
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Done") {
-                            dismiss()
-                        }
-                    }
-                    ToolbarItem(placement: .bottomBar) {
-                        BottomToolbar(
-                            modal: $currentModal,
-                            card: $card
-                        )
-                    }
-                }
-                .sheet(item: $currentModal) {
-                    item in
-                    switch item {
-                    case .stickerModal:
-                     
-                        StickerModal(
-                            stickerImage: $stickerImage
-                        )
-                        .onDisappear {
-                     
-                            if let image = stickerImage {
-                     
-                                card.addElement(
-                                    uiImage: image
-                                )
+            GeometryReader { proxy in
+                CardDetailsView(card: $card, viewScale: Settings.calculateScale(proxy.size))
+                    .frame(width: Settings.calculateSize(proxy.size).width, height: Settings.calculateSize(proxy.size).height)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") {
+                                dismiss()
                             }
-                     
-                            stickerImage = nil
                         }
-                        
-                    case .frameModal:
-                         FrameModal(
-                        frameIndex: $frameIndex
-                        )
-                    .onDisappear {
-                        if let frameIndex,
-                           let selected =
-                            store.selectedElement {
+                        ToolbarItem(placement: .bottomBar) {
+                            BottomToolbar(
+                                modal: $currentModal,
+                                card: $card
+                            )
+                        }
+                    }
+                    .sheet(item: $currentModal) {
+                        item in
+                        switch item {
+                        case .stickerModal:
                             
-                            card.update(
-                                selected,
-                                frameIndex: frameIndex)
+                            StickerModal(
+                                stickerImage: $stickerImage
+                            )
+                            .onDisappear {
+                                
+                                if let image = stickerImage {
+                                    
+                                    card.addElement(
+                                        uiImage: image
+                                    )
+                                }
+                                
+                                stickerImage = nil
+                            }
+                            
+                        case .frameModal:
+                            FrameModal(
+                                frameIndex: $frameIndex
+                            )
+                            .onDisappear {
+                                if let frameIndex,
+                                   let selected =
+                                    store.selectedElement {
+                                    
+                                    card.update(
+                                        selected,
+                                        frameIndex: frameIndex)
+                                }
+                                self.frameIndex = nil
+                            }
+                            
+                            
+                        default:
+                            Text(String(describing: item))
                         }
-                        self.frameIndex = nil
                     }
-                    
-                        
-                    default:
-                        Text(String(describing: item))
-                    }
+            }
+            .onChange(of: scenePhase) {
+                _, newPhase in
+                print("Scene Phase:", newPhase)
+                if newPhase == .inactive {
+                    print("Save Button Triggered")
+                    card.save()
                 }
-         }
-        .onChange(of: scenePhase) {
-            _, newPhase in
-              print("Scene Phase:", newPhase)
-            if newPhase == .inactive {
-              print("Save Button Triggered")
-                card.save()
             }
         }
     }

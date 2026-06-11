@@ -19,58 +19,23 @@ enum Settings {
     
     static let borderWidth: CGFloat = 5
     
-    static func calculateSize(
-        _ size: CGSize
-    ) -> CGSize {
-     
+    static func calculateSize(_ size: CGSize) -> CGSize {
         var newSize = size
-     
-        let ratio =
-            Settings.cardSize.width /
-            Settings.cardSize.height
-     
+        let ratio = Settings.cardSize.width / Settings.cardSize.height
         if size.width < size.height {
-     
             newSize.height =
-                min(
-                    size.height,
-                    newSize.width / ratio
-                )
-     
-            newSize.width =
-                min(
-                    size.width,
-                    newSize.height * ratio
-                )
-     
+                min(size.height, newSize.width / ratio)
+            newSize.width = min(size.width, newSize.height * ratio )
         } else {
-     
-            newSize.width =
-                min(
-                    size.width,
-                    newSize.height * ratio
-                )
-     
-            newSize.height =
-                min(
-                    size.height,
-                    newSize.width / ratio
-                )
+            newSize.width = min(size.width, newSize.height * ratio )
+            newSize.height = min(size.height, newSize.width / ratio )
         }
-     
         return newSize
     }
      
-    static func calculateScale(
-        _ size: CGSize
-    ) -> CGFloat {
-     
-        let newSize =
-            calculateSize(size)
-     
-        return
-            newSize.width /
-            Settings.cardSize.width
+    static func calculateScale(_ size: CGSize) -> CGFloat {
+        let newSize = calculateSize(size)
+        return newSize.width / Settings.cardSize.width
     }
 }
 
