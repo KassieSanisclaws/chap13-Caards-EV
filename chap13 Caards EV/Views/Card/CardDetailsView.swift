@@ -38,8 +38,9 @@ struct CardDetailsView: View {
     }
 }
 
-//#Preview {
-//    let store = CardStore()
-//    CardDetailsView()
-//        .environment(store)
-//}
+#Preview {
+    let store = CardStore()
+    let sampleCard = store.cards.first!
+    CardDetailsView(card: .constant(sampleCard))
+        .environment(store)
+}

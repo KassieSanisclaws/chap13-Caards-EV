@@ -28,21 +28,7 @@ struct SingleCardView: View {
                 CardDetailsView(card: $card, viewScale: Settings.calculateScale(proxy.size))
                     .frame(width: Settings.calculateSize(proxy.size).width, height: Settings.calculateSize(proxy.size).height)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Done") {
-                                dismiss()
-                            }
-                        }
-                        ToolbarItem(placement: .bottomBar) {
-                            BottomToolbar(
-                                modal: $currentModal,
-                                card: $card
-                            )
-                        }
-                    }
-                    .sheet(item: $currentModal) {
-                        item in
+                    .sheet(item: $currentModal) { item in
                         switch item {
                         case .stickerModal:
                             
@@ -83,6 +69,40 @@ struct SingleCardView: View {
                         }
                     }
             }
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") {
+                                dismiss()
+                            }
+                        }
+                        ToolbarItemGroup(placement: .bottomBar) {
+                            Button {
+                                currentModal = .photoModal
+                            } label: {
+                                Label("Photos", systemImage: "photo")
+                            }
+                            Button {
+                                currentModal = .frameModal
+                            } label: {
+                                Label("Frames", systemImage: "square.on.circle")
+                            }
+                            .disabled(
+                                store.selectedElement == nil ||
+                                !(store.selectedElement is ImageElement)
+                            )
+                            Button {
+                                currentModal = .stickerModal
+                            } label: {
+                                Label("Stickers", systemImage: "heart.circle")
+                            }
+                            Button {
+                                currentModal = .textModal
+                            } label: {
+                                Label("Text", systemImage: "textformat")
+                            }
+                        }
+                    }
+            }
             .onChange(of: scenePhase) {
                 _, newPhase in
                 print("Scene Phase:", newPhase)
@@ -93,7 +113,6 @@ struct SingleCardView: View {
             }
         }
     }
-}
 
 #Preview {
     SingleCardView()
